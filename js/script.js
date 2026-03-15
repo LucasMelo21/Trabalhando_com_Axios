@@ -3,13 +3,20 @@ const getData = async () => {
   try {
     const response = await axios.get(
       "https://jsonplaceholder.typicode.com/users",
+      // 3 - Defifindo Headers
+      {
+        headers: {
+          "Content-Type": "application/json",
+          custom: "header",
+        },
+      },
     );
 
     console.log(response);
 
     return response.data;
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
   }
 };
 getData();
@@ -31,7 +38,7 @@ const printData = async () => {
 
     div.appendChild(nameElement);
 
-    const emailElement = document.createElement("p")
+    const emailElement = document.createElement("p");
 
     emailElement.textContent = user.email;
 
@@ -42,3 +49,16 @@ const printData = async () => {
 };
 
 printData();
+
+// 4 - Post
+const form = document.querySelector("#post-form");
+const titleInput = document.querySelector("#title");
+const bodyInput = document.querySelector("#body");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  axios.post("https://jsonplaceholder.typicode.com/posts", {
+    body: {title: titleInput.value, body: bodyInput.value, userId: 1 },
+  });
+});
